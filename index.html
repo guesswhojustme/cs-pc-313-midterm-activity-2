@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LinguaBridge</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f3f5f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .app-container {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      background: #4a90e2;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 400px;
+    }
+
+    button:hover {
+      background: #357ABD;
+    }
+
+    .result {
+      margin-top: 15px;
+      padding: 10px;
+      background: #eaf3ff;
+      border-radius: 8px;
+    }
+
+    .cultural-tip {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    #wordInput{
+      width: 378px;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .words-container{
+      background: white;
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 40px;
+      right: 20%;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <h1>🌍 LinguaBridge</h1>
+    <p>Translate words and learn cultural tips!</p>
+
+    <select id="language">
+      <option value="filipino">English ↔ Filipino</option>
+      <option value="spanish">English ↔ Spanish</option>
+    </select>
+
+    <input type="text" id="wordInput" placeholder="Enter a word..." />
+    <button onclick="translateWord()">Translate</button>
+
+    <div class="result" id="result"></div>
+    <div class="cultural-tip" id="tip"></div>
+  </div>
+  <div class="words-container">
+    <h1>Words</h1>
+    <ul>
+        <li>
+            <p>hello</p>
+        </li>
+        <li>
+            <p>goodbye</p>
+        </li>
+        <li>
+            <p>thankyou</p>
+        </li>
+        <li>
+            <p>love</p>
+        </li>
+    </ul>
+  </div>
+  <script>  
+    const dictionary = {
+      filipino: {
+        hello: "kamusta",
+        goodbye: "paalam",
+        "thank you": "salamat",
+        love: "pag-ibig",
+      },
+      spanish: {
+        hello: "hola",
+        goodbye: "adiós",
+        "thank you": "gracias",
+        love: "amor",
+      }
+    };
+
+    const culturalTips = {
+      filipino: {
+        hello: "👋 Filipinos often greet each other with a smile and 'Kamusta ka?' meaning 'How are you?'",
+        goodbye: "Filipinos often use “Ingat!” (“Take care!”) as a friendly way to say goodbye to friends or family.",
+        "thank you": "Filipinos often smile or nod when they say “Salamat”, emphasizing sincerity and warmth.",
+        love: "The word “Pag-ibig” is often used in songs and poems that express deep emotion and devotion."
+      },
+      spanish: { 
+        hello: "🇪🇸 In Spain, people often greet with a friendly '¡Hola!' and may kiss on both cheeks.",
+        goodbye: "Spaniards say “Adiós” or “Hasta luego” (“See you later”) depending on familiarity — the latter is more casual and friendly.",
+        "thank you": "Spaniards use “Muchas gracias” (“Thank you very much”) to show deeper appreciation", 
+        love: "The word “Amor” is central to Spanish culture — seen in songs, art, and daily expressions."
+      }
+      
+    };
+
+    function translateWord() {
+      const lang = document.getElementById("language").value;
+      const word = document.getElementById("wordInput").value.trim().toLowerCase();
+      const resultDiv = document.getElementById("result");
+      const tipDiv = document.getElementById("tip");
+
+      const translation = dictionary[lang][word];
+      if (translation) {
+        resultDiv.innerHTML = `<strong>Translation:</strong> ${translation}`;
+      } else {
+        // Try reverse translation (e.g., Filipino → English)
+        const reversed = Object.entries(dictionary[lang]).find(([eng, trans]) => trans === word);
+        resultDiv.innerHTML = reversed
+          ? `<strong>Translation:</strong> ${reversed[0]}`
+          : "❌ Word not found in phrasebook.";
+      }
+
+      tipDiv.textContent = culturalTips[lang][word];
+    }
+  </script>
+</body>
+</html>
