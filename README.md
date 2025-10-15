@@ -1,3 +1,5 @@
+Live: https://guesswhojustme.github.io/cs-pc-313-midterm-activity-2/
+
 App Title:
 
 LinguaBridge
